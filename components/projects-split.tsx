@@ -375,9 +375,11 @@ export function ProjectsSplit({
                   {artwork.quoteSrc ? (
                     <div
                       className={
-                        artwork.id === "recollection-1" || artwork.id === "recollection-4"
-                          ? "mt-1 h-[148px] w-full md:absolute md:bottom-0 md:right-full md:mt-0 md:mr-3 md:h-auto md:w-[42%] md:max-w-[16.5rem]"
-                          : "mt-1 h-[148px] w-full md:absolute md:bottom-0 md:right-full md:mt-0 md:mr-3 md:h-auto md:w-[46%] md:max-w-[18rem]"
+                        artwork.id === "recollection-4"
+                          ? "mt-1 h-[220px] w-full md:absolute md:bottom-0 md:right-full md:mt-0 md:mr-3 md:h-auto md:w-[42%] md:max-w-[16.5rem]"
+                          : artwork.id === "recollection-1"
+                            ? "mt-1 h-[148px] w-full md:absolute md:bottom-0 md:right-full md:mt-0 md:mr-3 md:h-auto md:w-[42%] md:max-w-[16.5rem]"
+                            : "mt-1 h-[148px] w-full md:absolute md:bottom-0 md:right-full md:mt-0 md:mr-3 md:h-auto md:w-[46%] md:max-w-[18rem]"
                       }
                     >
                       <Image

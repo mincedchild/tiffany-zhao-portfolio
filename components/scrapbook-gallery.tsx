@@ -229,57 +229,28 @@ function SketchbookStrip({
 }
 
 function TattooFlashRow({ items }: { items: Artwork[] }) {
-  const rowRef = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState<number | null>(null)
-
-  useLayoutEffect(() => {
-    const row = rowRef.current
-    if (!row || items.length === 0) return
-
-    function update() {
-      const box = rowRef.current
-      if (!box) return
-      const imgs = [...box.querySelectorAll("img")]
-      if (imgs.length === 0 || imgs.some((img) => img.naturalWidth === 0)) return
-      const styles = getComputedStyle(box)
-      const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0
-      const sumAspect = imgs.reduce((sum, img) => sum + img.naturalWidth / img.naturalHeight, 0)
-      setHeight((box.clientWidth - gap * (imgs.length - 1)) / sumAspect)
-    }
-
-    update()
-    const imgs = [...row.querySelectorAll("img")]
-    for (const img of imgs) img.addEventListener("load", update)
-    const ro = new ResizeObserver(update)
-    ro.observe(row)
-    return () => {
-      for (const img of imgs) img.removeEventListener("load", update)
-      ro.disconnect()
-    }
-  }, [items.length])
-
   if (items.length === 0) return null
 
+  const odd = items.length % 2 === 1
+  const left = items.filter((_, index) => index % 2 === 0 && !(odd && index === items.length - 1))
+  const right = items.filter((_, index) => index % 2 === 1 || (odd && index === items.length - 1))
+
   return (
-    <div
-      ref={rowRef}
-      aria-label="Flash"
-      className="flex w-full justify-center gap-2 overflow-hidden md:gap-3"
-    >
-      {items.map((artwork) => (
-        <div
-          key={artwork.id}
-          style={height ? { height } : undefined}
-          className="shrink-0 overflow-hidden"
-        >
-          <Image
-            src={artwork.src || "/placeholder.svg"}
-            alt={artwork.title}
-            width={1400}
-            height={1400}
-            draggable={false}
-            className="block h-full w-auto max-w-none"
-          />
+    <div aria-label="Flash" className="grid w-full grid-cols-2 items-start gap-2 md:gap-3">
+      {[left, right].map((column, columnIndex) => (
+        <div key={columnIndex} className="flex min-w-0 flex-col gap-2 md:gap-3">
+          {column.map((artwork) => (
+            <div key={artwork.id} className="overflow-hidden">
+              <Image
+                src={artwork.src || "/placeholder.svg"}
+                alt={artwork.title}
+                width={1400}
+                height={1400}
+                draggable={false}
+                className="block h-auto w-full"
+              />
+            </div>
+          ))}
         </div>
       ))}
     </div>
@@ -338,6 +309,57 @@ function TattooPage({
   )
 }
 
+function GobBarRow() {
+  const rowRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    function align() {
+      const row = rowRef.current
+      if (!row) return
+      if (!window.matchMedia("(min-width: 768px)").matches) {
+        row.style.left = ""
+        return
+      }
+      const header = document.querySelector("header.fixed.left-0.top-0")
+      const tattoo = header
+        ? [...header.querySelectorAll("button")].find((button) => button.textContent?.trim() === "Tattoo")
+        : null
+      const section = row.offsetParent
+      if (!tattoo || !(section instanceof HTMLElement)) return
+      row.style.left = `${tattoo.getBoundingClientRect().left - section.getBoundingClientRect().left}px`
+    }
+
+    align()
+    const mq = window.matchMedia("(min-width: 768px)")
+    mq.addEventListener("change", align)
+    window.addEventListener("resize", align)
+    document.fonts?.ready.then(align)
+    return () => {
+      mq.removeEventListener("change", align)
+      window.removeEventListener("resize", align)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={rowRef}
+      className="mt-auto flex justify-center pt-10 md:absolute md:bottom-4 md:mt-0 md:justify-start md:pt-0"
+    >
+      {[0, 1, 2].map((i) => (
+        <Image
+          key={i}
+          src="/art/about/gob-bar.png"
+          alt={i === 0 ? "Gob bar" : ""}
+          width={683}
+          height={838}
+          draggable={false}
+          className="block h-auto w-[min(22vw,7.5rem)] md:w-[5.25rem]"
+        />
+      ))}
+    </div>
+  )
+}
+
 function AboutNote() {
   const valley =
     "font-valley text-[16.5px] leading-snug text-black [font-weight:320] [font-variation-settings:'wght'_320]"
@@ -345,8 +367,16 @@ function AboutNote() {
   return (
     <section
       aria-label="About"
-      className="min-h-dvh w-full px-4 pb-24 pt-16 md:px-8 md:pl-[min(13rem,22vw)] md:pt-10"
+      className="relative flex min-h-dvh w-full flex-col px-4 pb-8 pt-16 md:h-dvh md:overflow-hidden md:px-8 md:pb-10 md:pl-[min(13rem,22vw)] md:pt-10"
     >
+      <Image
+        src="/art/about/selfie.jpg"
+        alt="Tiffany Zhao"
+        width={904}
+        height={1241}
+        draggable={false}
+        className="mb-6 block h-auto w-[min(33.6vw,10.4rem)] md:hidden"
+      />
       <h1 className="font-hand text-2xl font-normal leading-none text-primary [font-synthesis:none] [font-variation-settings:normal] md:text-3xl">
         Tiffany Zhao{" "}
         <span lang="zh-Hans" className="font-valley text-[0.85em] [font-weight:320] [font-variation-settings:'wght'_320]">
@@ -359,24 +389,37 @@ function AboutNote() {
           Available for freelance work, and tattoo bookings! Just shoot me an email! {"<3"}
         </p>
         <p className="mt-6">Education - School of Visual Arts, New York, 2022-2026</p>
-        <p className="mt-1 text-primary">
-          Email -{" "}
-          <a href="mailto:mincedchild@gmail.com" className="underline-offset-2 hover:underline">
-            mincedchild@gmail.com
-          </a>
-        </p>
-        <p className="mt-1 text-primary">
-          Socials -{" "}
-          <a
-            href="https://www.instagram.com/minced.child/"
-            target="_blank"
-            rel="noreferrer"
-            className="underline-offset-2 hover:underline"
-          >
-            minced.child
-          </a>
-        </p>
       </div>
+      <div className={`mt-1 flex items-start justify-between gap-6 ${valley}`}>
+        <div className="min-w-0">
+          <p className="text-primary">
+            Email -{" "}
+            <a href="mailto:mincedchild@gmail.com" className="underline-offset-2 hover:underline">
+              mincedchild@gmail.com
+            </a>
+          </p>
+          <p className="mt-1 text-primary">
+            Socials -{" "}
+            <a
+              href="https://www.instagram.com/minced.child/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline-offset-2 hover:underline"
+            >
+              minced.child
+            </a>
+          </p>
+        </div>
+        <Image
+          src="/art/about/selfie.jpg"
+          alt="Tiffany Zhao"
+          width={904}
+          height={1241}
+          draggable={false}
+          className="hidden h-auto w-[12.8rem] shrink-0 md:block"
+        />
+      </div>
+      <GobBarRow />
     </section>
   )
 }
