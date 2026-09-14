@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { projectSeriesOrder, type Category } from "@/lib/artworks"
+import { projectSeriesOrder } from "@/lib/artworks"
+import type { ProjectSeries, View } from "@/lib/portfolio-view"
 
-export type View = Exclude<Category, "home"> | "about" | null
-export type ProjectSeries = (typeof projectSeriesOrder)[number]
+export type { ProjectSeries, View }
 
 const buttons: { label: string; view: View }[] = [
   { label: "Projects", view: "project" },
@@ -41,7 +41,7 @@ function NavList({
     : ""
 
   return (
-    <nav aria-label="Primary">
+    <nav aria-label="Primary" className="pointer-events-auto">
       <ul className={`flex flex-col ${itemAlign} ${pills ? "gap-1" : ""}`}>
         {buttons.map((b, i) => {
           const active = view === b.view
@@ -50,16 +50,12 @@ function NavList({
             <li
               key={b.label}
               className={end ? "flex flex-col items-end" : undefined}
-              style={
-                stair
-                  ? { paddingLeft: `${(i === 0 || i === buttons.length - 1 ? 0 : i) * (70 / (buttons.length - 1))}%` }
-                  : undefined
-              }
+              data-stair={stair && i !== 0 && i !== buttons.length - 1 ? i : undefined}
             >
               <button
                 type="button"
                 onClick={() => {
-                  setView(active ? null : b.view)
+                  setView(b.view)
                   if (!isProjects) onNavigate?.()
                 }}
                 aria-pressed={active}
@@ -127,7 +123,7 @@ function BrandButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="outline-none -m-4 p-4"
+      className="pointer-events-auto outline-none -m-4 p-4"
       aria-label="Home"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -182,7 +178,7 @@ export function FloatingNav({
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-[80] md:hidden">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-[90] md:hidden">
         <div
           ref={menuRef}
           className="pointer-events-auto flex items-center justify-between px-3 py-3 font-hand text-2xl leading-[1.15] text-black"
@@ -229,10 +225,10 @@ export function FloatingNav({
         </div>
       ) : null}
 
-      <header className="pointer-events-none fixed left-0 top-0 z-50 hidden p-3 md:block md:p-4">
-        <div className="pointer-events-auto flex flex-col items-start font-hand text-2xl leading-[1.15] text-black">
+      <header className="pointer-events-none fixed left-0 top-0 z-[90] hidden p-3 md:block md:p-4">
+        <div className="pointer-events-none flex flex-col items-start font-hand text-2xl leading-[1.15] text-black">
           <BrandButton onClick={goHome} />
-          <div data-home-stair className="mt-3 min-w-0">
+          <div data-home-stair className="pointer-events-none mt-3 min-w-0">
             <NavList
               view={view}
               setView={setView}

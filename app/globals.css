@@ -234,6 +234,18 @@
   .home-grid {
     grid-template-columns: repeat(auto-fit, clamp(125px, 19.25vw, 233px));
   }
+
+  [data-home-stair] {
+    --stair-col: clamp(125px, 19.25vw, 233px);
+  }
+
+  [data-home-stair] [data-stair="1"] {
+    padding-left: calc(var(--stair-col) * 0.28);
+  }
+
+  [data-home-stair] [data-stair="2"] {
+    padding-left: calc(var(--stair-col) * 0.56);
+  }
 }
 
 .menu-morph {

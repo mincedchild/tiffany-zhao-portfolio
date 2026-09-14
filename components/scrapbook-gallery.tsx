@@ -433,77 +433,23 @@ export function ScrapbookGallery({
 }) {
   const [active, setActive] = useState<Artwork | null>(null)
 
-  useEffect(() => {
-    if (view === "sketchbook") {
-      if (active?.category !== "sketchbook") {
-        setActive(sketchbookArtworks[0] ?? null)
-      }
-      return
-    }
-    if (!active) return
-    if (view === "about") {
-      setActive(null)
-      return
-    }
-    if (view === "project" && projectSeries === "Re:Collection") {
-      setActive(null)
-      return
-    }
-    if (view === null) {
-      if (active.projectsOnly) setActive(null)
-      return
-    }
-    if (active.category !== view) {
-      setActive(null)
-    }
-  }, [view, active, projectSeries])
-
-  const cards = useMemo(() => {
-    if (view === "about" || view === "tattoo") return []
-    return mixedHome
-  }, [view])
-
   useLayoutEffect(() => {
-    function firstImageOnSecondRow(grid: Element) {
-      const items = [...grid.querySelectorAll(":scope > div:not([aria-hidden])")] as HTMLElement[]
-      const buckets = new Map<number, HTMLElement[]>()
-      for (const el of items) {
-        const top = Math.round(el.getBoundingClientRect().top / 8) * 8
-        const list = buckets.get(top) ?? []
-        list.push(el)
-        buckets.set(top, list)
-      }
-      const tops = [...buckets.keys()].sort((a, b) => a - b)
-      if (tops.length < 2) return null
-      const row2 = buckets.get(tops[1])!
-      row2.sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left)
-      return row2[0]
+    if (view === "sketchbook") {
+      setActive((current) =>
+        current?.category === "sketchbook" ? current : (sketchbookArtworks[0] ?? null),
+      )
+      return
     }
+    if (view === "about" || view === "tattoo" || view === null) {
+      setActive(null)
+      return
+    }
+    if (view === "project" && (projectSeries === "Re:Collection" || projectSeries === "Feeding Frenzy")) {
+      setActive(null)
+    }
+  }, [view, projectSeries])
 
-    function update() {
-      const box = document.querySelector<HTMLElement>("[data-home-stair]")
-      if (!box) return
-      if (getComputedStyle(box).display === "none") return
-      const grid = document.querySelector(".home-grid")
-      if (!grid) return
-      const image = firstImageOnSecondRow(grid)
-      if (!image) return
-      const width = Math.max(0, Math.round(image.getBoundingClientRect().right - box.getBoundingClientRect().left))
-      box.style.width = `${width}px`
-    }
-
-    update()
-    const ro = new ResizeObserver(() => requestAnimationFrame(update))
-    ro.observe(document.documentElement)
-    const grid = document.querySelector(".home-grid")
-    if (grid) ro.observe(grid)
-    window.addEventListener("resize", update)
-    void document.fonts?.ready.then(update)
-    return () => {
-      ro.disconnect()
-      window.removeEventListener("resize", update)
-    }
-  }, [view, cards])
+  const cards = view === "about" || view === "tattoo" ? [] : mixedHome
 
   const lightboxItems = useMemo(() => {
     if (view === "sketchbook") return sketchbookArtworks
