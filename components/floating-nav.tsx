@@ -127,7 +127,7 @@ function BrandButton({ onClick }: { onClick: () => void }) {
       aria-label="Home"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/art/logo.png" alt="" className="block h-[2.3em] w-auto" />
+      <img src="/art/logo.png" alt="" draggable={false} className="block h-[2.3em] w-auto" />
     </button>
   )
 }

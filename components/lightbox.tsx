@@ -1,24 +1,21 @@
 "use client"
 
 import { useEffect } from "react"
-import Image from "next/image"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import type { Artwork } from "@/lib/artworks"
-
-function isGif(src: string) {
-  return src.toLowerCase().endsWith(".gif")
-}
 
 export function Lightbox({
   artwork,
   items = [],
   onClose,
   onChange,
+  hideSketchbookTitle = false,
 }: {
   artwork: Artwork | null
   items?: Artwork[]
   onClose: () => void
   onChange?: (artwork: Artwork) => void
+  hideSketchbookTitle?: boolean
 }) {
   const index = artwork ? items.findIndex((item) => item.id === artwork.id) : -1
   const canNavigate = Boolean(onChange) && items.length > 1 && index >= 0
@@ -52,11 +49,17 @@ export function Lightbox({
   if (!artwork) return null
 
   const caption = artwork.series ?? artwork.category
+  const hideTitle =
+    hideSketchbookTitle &&
+    (artwork.category === "sketchbook" || artwork.series === "The Little Green Monster")
 
   function go(delta: number) {
     if (!onChange || !canNavigate) return
     onChange(items[(index + delta + items.length) % items.length])
   }
+
+  const mediaClass =
+    "h-auto w-auto max-h-[95%] max-w-[95%] object-contain"
 
   return (
     <div
@@ -64,16 +67,16 @@ export function Lightbox({
       aria-modal="true"
       aria-label={artwork.title}
       onClick={onClose}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-5 bg-foreground/70 p-6 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in"
+      className="fixed inset-0 z-[100] flex flex-col bg-foreground/40 px-3 pb-6 pt-[1.8rem] backdrop-blur-sm md:px-8 md:pb-8 md:pt-[2.1rem]"
       data-state="open"
       style={{ animation: "fadeIn 0.22s ease-out" }}
     >
       <button
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-5 top-5 z-[1] flex h-11 w-11 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110"
+        className="absolute right-5 top-5 z-[1] flex h-8 w-8 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110 md:h-12 md:w-12"
       >
-        <X className="h-5 w-5" />
+        <X className="h-4 w-4 md:h-6 md:w-6" />
       </button>
 
       {canNavigate && (
@@ -85,9 +88,9 @@ export function Lightbox({
               go(-1)
             }}
             aria-label="Previous image"
-            className="absolute left-3 top-1/2 z-[1] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110 md:left-6"
+            className="absolute left-3 top-1/2 z-[1] flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110 md:left-6 md:h-12 md:w-12"
           >
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-4 w-4 md:h-6 md:w-6" />
           </button>
           <button
             type="button"
@@ -96,45 +99,43 @@ export function Lightbox({
               go(1)
             }}
             aria-label="Next image"
-            className="absolute right-3 top-1/2 z-[1] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110 md:right-6"
+            className="absolute right-3 top-1/2 z-[1] flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-card text-foreground shadow-lg transition-transform hover:scale-110 md:right-6 md:h-12 md:w-12"
           >
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-4 w-4 md:h-6 md:w-6" />
           </button>
         </>
       )}
 
       <figure
         onClick={(e) => e.stopPropagation()}
-        className="flex max-h-[85vh] max-w-[90vw] flex-col items-center gap-4"
+        className="flex min-h-0 w-full flex-1 flex-col"
       >
-        <div className="relative overflow-hidden rounded-md bg-card p-2 shadow-2xl">
+        <div className="flex min-h-0 flex-1 items-center justify-center">
           {artwork.kind === "video" ? (
             <video
               src={artwork.src}
               controls
               playsInline
-              className="max-h-[68vh] w-auto max-w-[86vw] rounded-sm"
-            />
-          ) : isGif(artwork.src) ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={artwork.src}
-              alt={artwork.title}
-              className="max-h-[68vh] w-auto rounded-sm object-contain"
+              className={mediaClass}
             />
           ) : (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={artwork.src || "/placeholder.svg"}
               alt={artwork.title}
-              width={900}
-              height={900}
-              className="max-h-[68vh] w-auto rounded-sm object-contain"
+              className={mediaClass}
             />
           )}
         </div>
-        <figcaption className="text-center">
-          <span className="font-hand text-3xl text-card">{artwork.title}</span>
-          <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.22em] text-card/70">
+        <figcaption className="flex min-h-[2.75rem] shrink-0 flex-col justify-start pt-1.5 text-center md:min-h-[3.75rem]">
+          {hideTitle ? null : (
+            <span className="font-hand text-xl text-card md:text-3xl">{artwork.title}</span>
+          )}
+          <span
+            className={`block text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-card/70 md:text-xs md:tracking-[0.22em] ${
+              hideTitle ? "" : "mt-1"
+            }`}
+          >
             {caption}
           </span>
         </figcaption>

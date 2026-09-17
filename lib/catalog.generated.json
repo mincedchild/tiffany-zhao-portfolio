@@ -1,0 +1,712 @@
+{
+  "projectSeries": [
+    {
+      "name": "Re:Collection",
+      "layout": "recollection",
+      "title": "Re:Collection- Senior Thesis Project",
+      "meta": "New York, 2026",
+      "description": "Reimagining and illustrating entries from my personal dream journal.",
+      "credit": "Tattooed with Ink on Silicone skin",
+      "introVideoSrc": "/art/projects/recollection/book.mov",
+      "headerAlign": false,
+      "lightbox": false
+    },
+    {
+      "name": "The Little Green Monster",
+      "layout": "book-grid",
+      "title": "The Little Green Monster Book project",
+      "meta": "New York, 2025",
+      "description": "Illustrated Short story of “The Little Green Monster”- The Elephant vanishes, Haruki Murakami",
+      "credit": "Watercolour, Hand-bound Hard cover book",
+      "introVideoSrc": null,
+      "headerAlign": false,
+      "lightbox": true
+    },
+    {
+      "name": "Feeding Frenzy",
+      "layout": "column-captions",
+      "title": "Feeding Frenzy",
+      "meta": "New York, 2025",
+      "description": "Narrative painting triptych",
+      "credit": "18\" x 24\" Oil on Artboard",
+      "introVideoSrc": null,
+      "headerAlign": true,
+      "lightbox": false
+    },
+    {
+      "name": "Grand Central (Infe)Station",
+      "layout": "centered-comic",
+      "title": "Grand Central (Infe)Station",
+      "meta": "New York, 2025",
+      "description": "Live Drawing",
+      "credit": "Procreate, Digital triptych comic",
+      "introVideoSrc": null,
+      "headerAlign": true,
+      "lightbox": true
+    }
+  ],
+  "homeOrder": [
+    "feeding-frenzy-wind",
+    "recollection-3",
+    "little-green-monster-1",
+    "recollection-1",
+    "home-fish",
+    "sketchbook-16",
+    "home-the-mayans",
+    "home-where-the-wild-things-are",
+    "home-whose-ready-for-dinner",
+    "grand-central-rats",
+    "home-let-me-go",
+    "recollection-10",
+    "home-meet-coffee",
+    "recollection-5",
+    "home-deli-cats",
+    "home-surge",
+    "grand-central-more",
+    "feeding-frenzy-whisper",
+    "sketchbook-14",
+    "home-live-drawing-fantastical",
+    "recollection-7",
+    "recollection-2",
+    "sketchbook-08",
+    "home-flower-garden",
+    "sketchbook-07",
+    "sketchbook-09",
+    "recollection-4",
+    "sketchbook-18",
+    "sketchbook-02",
+    "sketchbook-05",
+    "grand-central-theyre-everywhere",
+    "sketchbook-15",
+    "recollection-6",
+    "sketchbook-17",
+    "recollection-8",
+    "recollection-9",
+    "sketchbook-03",
+    "little-green-monster-2",
+    "sketchbook-19",
+    "sketchbook-20",
+    "sketchbook-21",
+    "sketchbook-22",
+    "sketchbook-23",
+    "sketchbook-24",
+    "sketchbook-25"
+  ],
+  "artworks": [
+    {
+      "id": "home-deli-cats",
+      "title": "Deli Cats",
+      "src": "/art/home/deli-cats.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-fish",
+      "title": "Fish!",
+      "src": "/art/home/fish.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-flower-garden",
+      "title": "Flower Garden",
+      "src": "/art/home/flower-garden.png",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-let-me-go",
+      "title": "Let me go",
+      "src": "/art/home/let-me-go.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-live-drawing-fantastical",
+      "title": "Live drawing — Fantastical",
+      "src": "/art/home/live-drawing-fantastical.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-meet-coffee",
+      "title": "Meet coffee",
+      "src": "/art/home/meet-coffee.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-surge",
+      "title": "Surge",
+      "src": "/art/home/surge.png",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-the-mayans",
+      "title": "The Mayans",
+      "src": "/art/home/the-mayans.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-where-the-wild-things-are",
+      "title": "Where the wild things are",
+      "src": "/art/home/where-the-wild-things-are.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "home-whose-ready-for-dinner",
+      "title": "Whose ready for dinner",
+      "src": "/art/home/whose-ready-for-dinner.jpg",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "feeding-frenzy-wind",
+      "title": "Wind",
+      "src": "/art/projects/feeding-frenzy/wind.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Feeding Frenzy"
+    },
+    {
+      "id": "feeding-frenzy-whisper",
+      "title": "Whisper",
+      "src": "/art/projects/feeding-frenzy/whisper.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Feeding Frenzy"
+    },
+    {
+      "id": "feeding-frenzy-breath",
+      "title": "Breath",
+      "src": "/art/projects/feeding-frenzy/breath.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Feeding Frenzy"
+    },
+    {
+      "id": "grand-central-rats",
+      "title": "Rats",
+      "src": "/art/projects/grand-central-infe-station/rats.png",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Grand Central (Infe)Station"
+    },
+    {
+      "id": "grand-central-more",
+      "title": "More",
+      "src": "/art/projects/grand-central-infe-station/more.png",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Grand Central (Infe)Station"
+    },
+    {
+      "id": "grand-central-theyre-everywhere",
+      "title": "They're Everywhere",
+      "src": "/art/projects/grand-central-infe-station/theyre-everywhere.png",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Grand Central (Infe)Station"
+    },
+    {
+      "id": "recollection-1",
+      "title": "Dec 15, 2021",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-1.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/1.png"
+    },
+    {
+      "id": "recollection-2",
+      "title": "Aug 5, 2023",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-2.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/2.png"
+    },
+    {
+      "id": "recollection-3",
+      "title": "Dec 5, 2023",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-3.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/3.png"
+    },
+    {
+      "id": "recollection-4",
+      "title": "Jun 27, 2020",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-4.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/4.png"
+    },
+    {
+      "id": "recollection-5",
+      "title": "Jun 28, 2020",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-5.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/5.png"
+    },
+    {
+      "id": "recollection-6",
+      "title": "May 11, 2022",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-6.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/6.png"
+    },
+    {
+      "id": "recollection-7",
+      "title": "Oct 27, 2024",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-7.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/7.png"
+    },
+    {
+      "id": "recollection-8",
+      "title": "Aug 10, 2020",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-8.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/8.png"
+    },
+    {
+      "id": "recollection-9",
+      "title": "May 10, 2023",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-9.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/9.png"
+    },
+    {
+      "id": "recollection-10",
+      "title": "Oct 15, 2025",
+      "src": "/art/projects/recollection/zhao-mengtong-thesis-10.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "Re:Collection",
+      "quoteSrc": "/art/projects/recollection/quotes/10.png"
+    },
+    {
+      "id": "little-green-monster-1",
+      "title": "1",
+      "src": "/art/projects/the-little-green-monster/1.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "The Little Green Monster"
+    },
+    {
+      "id": "little-green-monster-2",
+      "title": "2",
+      "src": "/art/projects/the-little-green-monster/2.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": false,
+      "series": "The Little Green Monster"
+    },
+    {
+      "id": "little-green-monster-3",
+      "title": "3",
+      "src": "/art/projects/the-little-green-monster/3.png",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "The Little Green Monster",
+      "fullRow": true
+    },
+    {
+      "id": "little-green-monster-4",
+      "title": "4",
+      "src": "/art/projects/the-little-green-monster/4.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "The Little Green Monster"
+    },
+    {
+      "id": "little-green-monster-5",
+      "title": "5",
+      "src": "/art/projects/the-little-green-monster/5.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "The Little Green Monster"
+    },
+    {
+      "id": "little-green-monster-6",
+      "title": "6",
+      "src": "/art/projects/the-little-green-monster/6.jpg",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "The Little Green Monster"
+    },
+    {
+      "id": "little-green-monster-flip",
+      "title": "Flip",
+      "src": "/art/projects/the-little-green-monster/flip.gif",
+      "category": "project",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "The Little Green Monster",
+      "fullRow": true,
+      "lead": true
+    },
+    {
+      "id": "sketchbook-02",
+      "title": "Sketch 2",
+      "src": "/art/sketchbook/img-0018.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-01",
+      "title": "Sketch 1",
+      "src": "/art/sketchbook/img-0014.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-03",
+      "title": "Sketch 3",
+      "src": "/art/sketchbook/img-0020.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-04",
+      "title": "Sketch 4",
+      "src": "/art/sketchbook/img-0028.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-05",
+      "title": "Sketch 5",
+      "src": "/art/sketchbook/img-0029.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-06",
+      "title": "Sketch 6",
+      "src": "/art/sketchbook/img-0030.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-07",
+      "title": "Sketch 7",
+      "src": "/art/sketchbook/img-0302-1.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-08",
+      "title": "Sketch 8",
+      "src": "/art/sketchbook/img-0895-1.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-09",
+      "title": "Sketch 9",
+      "src": "/art/sketchbook/img-0897-1.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-10",
+      "title": "Sketch 10",
+      "src": "/art/sketchbook/img-1528.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-11",
+      "title": "Sketch 11",
+      "src": "/art/sketchbook/img-3330.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-12",
+      "title": "Sketch 12",
+      "src": "/art/sketchbook/img-4067-1.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-13",
+      "title": "Sketch 13",
+      "src": "/art/sketchbook/img-4068.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "sketchbook-14",
+      "title": "Untitled 18",
+      "src": "/art/sketchbook/untitled-artwork-18.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-15",
+      "title": "Untitled 23",
+      "src": "/art/sketchbook/untitled-artwork-23.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-16",
+      "title": "Untitled 1",
+      "src": "/art/sketchbook/untitled-artwork-1-5.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-17",
+      "title": "Sketch 17",
+      "src": "/art/sketchbook/wechatimg131.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-18",
+      "title": "Sketch 18",
+      "src": "/art/sketchbook/81c72407-5ad2-4c12-b5bb-ee0b86bdabc9.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-19",
+      "title": "Sketch 19",
+      "src": "/art/sketchbook/b7e1e7c2-66b9-4e10-8c0c-9e5e399f5d44.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-20",
+      "title": "Sketch 20",
+      "src": "/art/sketchbook/img-0899.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-21",
+      "title": "Sketch 21",
+      "src": "/art/sketchbook/img-1535.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-22",
+      "title": "Sketch 22",
+      "src": "/art/sketchbook/img-1536.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-23",
+      "title": "Sketch 23",
+      "src": "/art/sketchbook/img-1708.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-24",
+      "title": "Sketch 24",
+      "src": "/art/sketchbook/img-1718.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "sketchbook-25",
+      "title": "Sketch 25",
+      "src": "/art/sketchbook/img-4861.jpg",
+      "category": "sketchbook",
+      "kind": "image",
+      "projectsOnly": false
+    },
+    {
+      "id": "tattoo-botanical",
+      "title": "Wildflower Flash",
+      "src": "/art/tattoo-botanical.png",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "tattoo-bird",
+      "title": "Little Bird Flash",
+      "src": "/art/tattoo-bird.png",
+      "category": "home",
+      "kind": "image",
+      "projectsOnly": true
+    },
+    {
+      "id": "tattoo-flash-frogs",
+      "title": "Frog Flash",
+      "src": "/art/tattoo/flash/flash-frogs.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Flash"
+    },
+    {
+      "id": "tattoo-flash-birds",
+      "title": "Bird Flash",
+      "src": "/art/tattoo/flash/flash-birds.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Flash"
+    },
+    {
+      "id": "tattoo-flash-cats",
+      "title": "Cat Flash",
+      "src": "/art/tattoo/flash/flash-cats.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Flash"
+    },
+    {
+      "id": "tattoo-flash-doghouse",
+      "title": "Doghouse Flash",
+      "src": "/art/tattoo/flash/flash-doghouse.png",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Flash"
+    },
+    {
+      "id": "tattoo-flash-stars",
+      "title": "Star Flash",
+      "src": "/art/tattoo/flash/flash-stars.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Flash"
+    },
+    {
+      "id": "tattoo-work-bats",
+      "title": "Bat Ribs",
+      "src": "/art/tattoo/work-bats.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    },
+    {
+      "id": "tattoo-work-stars",
+      "title": "Star Hips",
+      "src": "/art/tattoo/work-stars.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    },
+    {
+      "id": "tattoo-work-star-cat",
+      "title": "Star Cat",
+      "src": "/art/tattoo/work-star-cat.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    },
+    {
+      "id": "tattoo-work-sword",
+      "title": "Sword",
+      "src": "/art/tattoo/work-sword.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    },
+    {
+      "id": "tattoo-work-shoulder",
+      "title": "Shoulder",
+      "src": "/art/tattoo/work-shoulder.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    },
+    {
+      "id": "tattoo-work-arm-flower",
+      "title": "Arm Flower",
+      "src": "/art/tattoo/work-arm-flower.jpg",
+      "category": "tattoo",
+      "kind": "image",
+      "projectsOnly": true,
+      "series": "Work"
+    }
+  ]
+}

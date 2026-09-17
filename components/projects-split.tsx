@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react"
 import Image from "next/image"
-import { artworks, type Artwork } from "@/lib/artworks"
+import { artworks, getProjectSeries, projectSeries, type Artwork } from "@/lib/artworks"
 import type { ProjectSeries } from "@/components/floating-nav"
 
 type FullscreenVideo = HTMLVideoElement & {
@@ -17,36 +17,12 @@ type SeriesIntroCopy = {
   credit: string
 }
 
-const recollectionIntro = {
-  title: "Re:Collection- Senior Thesis Project",
-  meta: "New York, 2026",
-  description: "Reimagining and illustrating entries from my personal dream journal.",
-  credit: "Tattooed with Ink on Silicone skin",
-} as const satisfies SeriesIntroCopy
+const headerAlignTitle =
+  projectSeries.find((series) => series.layout === "recollection")?.title ??
+  projectSeries[0]?.title ??
+  ""
 
-const littleGreenMonsterIntro = {
-  title: "The Little Green Monster Book project",
-  meta: "New York, 2025",
-  description:
-    "Illustrated Short story of “The Little Green Monster”- The Elephant vanishes, Haruki Murakami",
-  credit: "Watercolour, Hand-bound Hard cover book",
-} as const satisfies SeriesIntroCopy
-
-const feedingFrenzyIntro = {
-  title: "Feeding Frenzy",
-  meta: "New York, 2025",
-  description: "Narrative painting triptych",
-  credit: '18" x 24" Oil on Artboard',
-} as const satisfies SeriesIntroCopy
-
-const grandCentralIntro = {
-  title: "Grand Central (Infe)Station",
-  meta: "New York, 2025",
-  description: "Live Drawing",
-  credit: "Procreate, Digital triptych comic",
-} as const satisfies SeriesIntroCopy
-
-function RecollectionBookVideo() {
+function SeriesIntroVideo({ src, label }: { src: string; label: string }) {
   const videoRef = useRef<FullscreenVideo>(null)
   const [fullscreen, setFullscreen] = useState(false)
 
@@ -116,14 +92,14 @@ function RecollectionBookVideo() {
   return (
     <video
       ref={videoRef}
-      src="/art/projects/recollection/book.mov"
+      src={src}
       autoPlay
       muted
       loop
       playsInline
       preload="auto"
       controls={fullscreen}
-      aria-label="Book"
+      aria-label={label}
       className="h-auto w-full cursor-pointer object-contain"
       onClick={() => {
         if (!fullscreen) void enterFullscreen()
@@ -173,7 +149,13 @@ function ProjectSeriesHeader({
   )
 }
 
-function RecollectionIntro() {
+function RecollectionIntro({
+  copy,
+  videoSrc,
+}: {
+  copy: SeriesIntroCopy
+  videoSrc: string | null
+}) {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [titleWidth, setTitleWidth] = useState<number | null>(null)
 
@@ -189,18 +171,15 @@ function RecollectionIntro() {
 
   return (
     <>
-      <ProjectSeriesHeader copy={recollectionIntro} titleRef={titleRef} />
-      <div className="mb-6 mt-1 md:mb-8" style={titleWidth ? { width: titleWidth } : undefined}>
-        <RecollectionBookVideo />
-      </div>
+      <ProjectSeriesHeader copy={copy} titleRef={titleRef} />
+      {videoSrc ? (
+        <div className="mb-6 mt-1 md:mb-8" style={titleWidth ? { width: titleWidth } : undefined}>
+          <SeriesIntroVideo src={videoSrc} label={copy.title} />
+        </div>
+      ) : null}
     </>
   )
 }
-
-const LITTLE_GREEN_FULL_ROW_IDS = new Set([
-  "little-green-monster-flip",
-  "little-green-monster-3",
-])
 
 function ProjectMedia({
   artwork,
@@ -234,6 +213,7 @@ function ProjectMedia({
       alt={artwork.title}
       width={1400}
       height={1400}
+      sizes="(max-width: 767px) 90vw, 45vw"
       draggable={false}
       className={className}
     />
@@ -282,17 +262,20 @@ export function ProjectsSplit({
   onOpen?: (artwork: Artwork) => void
 }) {
   const imagesRef = useRef<HTMLDivElement>(null)
+  const info = getProjectSeries(series)
+  const layout = info?.layout ?? "column"
+  const copy = {
+    title: info?.title ?? series,
+    meta: info?.meta ?? "",
+    description: info?.description ?? "",
+    credit: info?.credit ?? "",
+  }
 
   const items = useMemo(() => {
-    const filtered = artworks.filter(
-      (artwork) =>
-        artwork.series === series &&
-        !(series === "Re:Collection" && artwork.id === "recollection-book"),
-    )
-    if (series !== "The Little Green Monster") return filtered
-    const flip = filtered.find((artwork) => artwork.id === "little-green-monster-flip")
-    const rest = filtered.filter((artwork) => artwork.id !== "little-green-monster-flip")
-    return flip ? [flip, ...rest] : rest
+    const filtered = artworks.filter((artwork) => artwork.series === series)
+    const lead = filtered.filter((artwork) => artwork.lead)
+    const rest = filtered.filter((artwork) => !artwork.lead)
+    return [...lead, ...rest]
   }, [series])
 
   useEffect(() => {
@@ -311,7 +294,17 @@ export function ProjectsSplit({
     imagesRef.current?.scrollTo({ top: 0 })
   }, [series])
 
-  const isGrandCentral = series === "Grand Central (Infe)Station"
+  const centered = layout === "centered-comic"
+  const galleryClass =
+    layout === "book-grid"
+      ? "mx-auto grid w-[85%] grid-cols-2 items-start gap-2 pb-6 md:gap-3 md:pb-8"
+      : layout === "column-captions"
+        ? "mx-auto flex w-[68%] flex-col gap-4 pb-6 md:gap-6 md:pb-8"
+        : layout === "centered-comic"
+          ? "mx-auto flex w-full flex-col items-center gap-6 pb-6 md:gap-8 md:pb-8"
+          : layout === "recollection"
+            ? "mx-auto flex w-[85%] flex-col gap-4 pb-6 md:gap-14 md:pb-8"
+            : "mx-auto flex w-[85%] flex-col gap-10 pb-6 pt-6 md:gap-14 md:pb-8 md:pt-8"
 
   return (
     <section
@@ -320,53 +313,32 @@ export function ProjectsSplit({
     >
       <div
         className={
-          isGrandCentral
+          centered
             ? "mx-auto w-full px-5 pt-12 md:px-10 md:pl-[min(13rem,24vw)] md:pr-6 md:pt-8"
             : "mx-auto w-full max-w-4xl px-5 pt-12 md:px-10 md:pl-[min(13rem,24vw)] md:pt-8"
         }
       >
-        {series === "Re:Collection" ? <RecollectionIntro /> : null}
-        {series === "The Little Green Monster" ? (
-          <ProjectSeriesHeader copy={littleGreenMonsterIntro} />
-        ) : null}
-        {series === "Feeding Frenzy" ? (
+        {layout === "recollection" ? (
+          <RecollectionIntro copy={copy} videoSrc={info?.introVideoSrc ?? null} />
+        ) : (
           <ProjectSeriesHeader
-            copy={feedingFrenzyIntro}
-            leftColumnMatch={recollectionIntro.title}
+            copy={copy}
+            leftColumnMatch={info?.headerAlign ? headerAlignTitle : undefined}
           />
-        ) : null}
-        {series === "Grand Central (Infe)Station" ? (
-          <ProjectSeriesHeader
-            copy={grandCentralIntro}
-            leftColumnMatch={recollectionIntro.title}
-          />
-        ) : null}
-        <div
-          className={`${
-            series === "The Little Green Monster"
-              ? "mx-auto grid w-[85%] grid-cols-2 items-start gap-2 pb-6 md:gap-3 md:pb-8"
-              : series === "Feeding Frenzy"
-                ? "mx-auto flex w-[68%] flex-col gap-4 pb-6 md:gap-6 md:pb-8"
-                : series === "Grand Central (Infe)Station"
-                  ? "mx-auto flex w-full flex-col items-center gap-6 pb-6 md:gap-8 md:pb-8"
-                : series === "Re:Collection"
-                  ? "mx-auto flex w-[85%] flex-col gap-4 pb-6 md:gap-14 md:pb-8"
-                  : "flex flex-col gap-10 pb-6 pt-6 md:gap-14 md:pb-8 md:pt-8"
-          }`}
-        >
+        )}
+        <div className={galleryClass}>
           {items.map((artwork) => (
             <div
               key={artwork.id}
               className={
-                series === "The Little Green Monster" &&
-                LITTLE_GREEN_FULL_ROW_IDS.has(artwork.id)
+                layout === "book-grid" && artwork.fullRow
                   ? "col-span-2"
-                  : isGrandCentral
+                  : centered
                     ? "flex w-full justify-center"
                     : undefined
               }
             >
-              {series === "Re:Collection" ? (
+              {layout === "recollection" ? (
                 <div className="md:relative">
                   <p className="mb-1 text-right font-hand text-[11px] font-normal leading-none text-black [font-synthesis:none] [font-variation-settings:normal] md:text-xs">
                     {artwork.title}
@@ -387,6 +359,7 @@ export function ProjectsSplit({
                         alt=""
                         width={800}
                         height={800}
+                        sizes="(max-width: 767px) 90vw, 18rem"
                         draggable={false}
                         className="h-full w-auto max-w-full object-contain object-left md:h-auto md:w-full"
                       />
@@ -399,13 +372,13 @@ export function ProjectsSplit({
                     artwork={artwork}
                     onOpen={onOpen}
                     className={
-                      isGrandCentral
+                      centered
                         ? "block outline-none focus-visible:ring-2 focus-visible:ring-black/30"
                         : undefined
                     }
-                    mediaClassName={isGrandCentral ? grandCentralMediaClassName : undefined}
+                    mediaClassName={centered ? grandCentralMediaClassName : undefined}
                   />
-                  {series === "Feeding Frenzy" ? (
+                  {layout === "column-captions" ? (
                     <p className="mt-1.5 text-right font-hand text-[26px] font-normal leading-none text-black [font-synthesis:none] [font-variation-settings:normal]">
                       {artwork.title}
                     </p>

@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
-import { artworks, type Artwork } from "@/lib/artworks"
+import { artworks, getProjectSeries, type Artwork } from "@/lib/artworks"
 import { homeDisplayOrder } from "@/lib/home-display-order"
 import { applyHomeOrder } from "@/lib/apply-home-order"
 import { Lightbox } from "@/components/lightbox"
@@ -14,7 +14,13 @@ const mixedHome = homeDisplayOrder.length
   ? applyHomeOrder(homeArtworks, homeDisplayOrder)
   : homeArtworks
 
-function PolaroidMedia({ artwork }: { artwork: Artwork }) {
+function PolaroidMedia({
+  artwork,
+  eager,
+}: {
+  artwork: Artwork
+  eager?: boolean
+}) {
   const className = "pointer-events-none block aspect-square w-full object-cover"
 
   if (artwork.kind === "video") {
@@ -40,6 +46,9 @@ function PolaroidMedia({ artwork }: { artwork: Artwork }) {
       alt={artwork.title}
       width={466}
       height={466}
+      sizes="(max-width: 767px) 33vw, 20vw"
+      loading={eager ? "eager" : "lazy"}
+      fetchPriority={eager ? "high" : "auto"}
       draggable={false}
       className={className}
     />
@@ -49,9 +58,11 @@ function PolaroidMedia({ artwork }: { artwork: Artwork }) {
 function GalleryCard({
   artwork,
   onOpen,
+  eager,
 }: {
   artwork: Artwork
   onOpen: (a: Artwork) => void
+  eager?: boolean
 }) {
   return (
     <div className="relative min-w-0">
@@ -61,17 +72,13 @@ function GalleryCard({
         aria-label={`View ${artwork.title}`}
         className="group block w-full cursor-pointer outline-none transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-black/30"
       >
-        <PolaroidMedia artwork={artwork} />
+        <PolaroidMedia artwork={artwork} eager={eager} />
       </button>
     </div>
   )
 }
 
-const sketchbookArtworks = (() => {
-  const items = artworks.filter((artwork) => artwork.category === "sketchbook")
-  if (items.length < 2) return items
-  return [items[1], items[0], ...items.slice(2)]
-})()
+const sketchbookArtworks = artworks.filter((artwork) => artwork.category === "sketchbook")
 
 const tattooFlashArtworks = artworks.filter(
   (artwork) => artwork.category === "tattoo" && artwork.series === "Flash",
@@ -109,6 +116,7 @@ function SketchbookMedia({
       alt={artwork.title}
       width={width}
       height={height}
+      sizes={width <= 280 ? "140px" : "(max-width: 767px) 90vw, 70vw"}
       draggable={false}
       className={className}
     />
@@ -246,6 +254,7 @@ function TattooFlashRow({ items }: { items: Artwork[] }) {
                 alt={artwork.title}
                 width={1400}
                 height={1400}
+                sizes="(max-width: 767px) 50vw, 40vw"
                 draggable={false}
                 className="block h-auto w-full"
               />
@@ -267,6 +276,7 @@ function TattooBannerStrip({ items }: { items: Artwork[] }) {
             alt={artwork.title}
             width={1400}
             height={1400}
+            sizes="220px"
             draggable={false}
             className="block h-full w-auto max-w-none"
           />
@@ -352,6 +362,7 @@ function GobBarRow() {
           alt={i === 0 ? "Gob bar" : ""}
           width={683}
           height={838}
+          sizes="6rem"
           draggable={false}
           className="block h-auto w-[min(22vw,7.5rem)] md:w-[5.25rem]"
         />
@@ -374,6 +385,7 @@ function AboutNote() {
         alt="Tiffany Zhao"
         width={904}
         height={1241}
+        sizes="11rem"
         draggable={false}
         className="mb-6 block h-auto w-[min(33.6vw,10.4rem)] md:hidden"
       />
@@ -408,6 +420,15 @@ function AboutNote() {
             >
               minced.child
             </a>
+            {"  |  "}
+            <a
+              href="https://www.instagram.com/teef.tats/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline-offset-2 hover:underline"
+            >
+              teef.tats
+            </a>
           </p>
         </div>
         <Image
@@ -415,6 +436,7 @@ function AboutNote() {
           alt="Tiffany Zhao"
           width={904}
           height={1241}
+          sizes="13rem"
           draggable={false}
           className="hidden h-auto w-[12.8rem] shrink-0 md:block"
         />
@@ -444,7 +466,7 @@ export function ScrapbookGallery({
       setActive(null)
       return
     }
-    if (view === "project" && (projectSeries === "Re:Collection" || projectSeries === "Feeding Frenzy")) {
+    if (view === "project" && !getProjectSeries(projectSeries).lightbox) {
       setActive(null)
     }
   }, [view, projectSeries])
@@ -455,10 +477,9 @@ export function ScrapbookGallery({
     if (view === "sketchbook") return sketchbookArtworks
     if (view === "project") {
       const items = artworks.filter((artwork) => artwork.series === projectSeries)
-      if (projectSeries !== "The Little Green Monster") return items
-      const flip = items.find((artwork) => artwork.id === "little-green-monster-flip")
-      const rest = items.filter((artwork) => artwork.id !== "little-green-monster-flip")
-      return flip ? [flip, ...rest] : rest
+      const lead = items.filter((artwork) => artwork.lead)
+      const rest = items.filter((artwork) => !artwork.lead)
+      return [...lead, ...rest]
     }
     return mixedHome
   }, [view, projectSeries])
@@ -469,13 +490,12 @@ export function ScrapbookGallery({
       items={lightboxItems}
       onChange={setActive}
       onClose={() => setActive(null)}
+      hideSketchbookTitle={view === null}
     />
   )
 
   if (view === "project") {
-    const recollection = projectSeries === "Re:Collection"
-    const feedingFrenzy = projectSeries === "Feeding Frenzy"
-    const skipLightbox = recollection || feedingFrenzy
+    const skipLightbox = !getProjectSeries(projectSeries).lightbox
     return (
       <>
         <ProjectsSplit series={projectSeries} onOpen={skipLightbox ? undefined : setActive} />
@@ -508,8 +528,13 @@ export function ScrapbookGallery({
         {cards.length > 0 ? (
           <div aria-hidden className="col-span-1 row-span-1 hidden md:block" />
         ) : null}
-        {cards.map((artwork) => (
-          <GalleryCard key={artwork.id} artwork={artwork} onOpen={setActive} />
+        {cards.map((artwork, index) => (
+          <GalleryCard
+            key={artwork.id}
+            artwork={artwork}
+            onOpen={setActive}
+            eager={index < 6}
+          />
         ))}
       </div>
 
